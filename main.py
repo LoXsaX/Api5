@@ -18,23 +18,25 @@ def predict_rub_salary(salary_from = None, salary_to = None):
 
 def get_statistic_hh():
     vacancies_list = {}
-    languages = ["JavaScript",
-    "Java", 
-    "Python", 
-    "Ruby",
-    "PHP",
-    "C++",
-    "CSS",
-    "C#",
-    "C",
-    "Go"]
+    languages = [
+        "JavaScript",
+        "Java", 
+        "Python", 
+        "Ruby",
+        "PHP",
+        "C++",
+        "CSS",
+        "C#",
+        "C",
+        "Go"
+    ]
     for language in languages:
         predicted_salary_list = []
         url = 'https://api.hh.ru/vacancies'
         payload = {
-    "text": f"программист {language} ",
-    "area": 1,
-     }
+            "text": f"программист {language} ",
+            "area": 1,
+         }
         response = requests.get(url, params = payload)
         response.raise_for_status()
         for salary in response.json()["items"]:
@@ -47,16 +49,27 @@ def get_statistic_hh():
         if predicted_salary_list:
             average_salary_hh = int(sum(predicted_salary_list) / len(predicted_salary_list))
         vacancies_list[language] = {
-    "vacancies_found": response.json()["found"],
-    "vacancies_processed": len(predicted_salary_list),
-    "average_salary": average_salary_hh
-     }
+            "vacancies_found": response.json()["found"],
+            "vacancies_processed": len(predicted_salary_list),
+            "average_salary": average_salary_hh
+         }
     return vacancies_list
 
 
 def get_statistic_sj(sj_token):
     vacancies_list = {}
-    languages = ["JavaScript", "Java", "Python", "Ruby", "PHP", "C++", "CSS", "C#", "C", "Go"]
+    languages = [
+        "JavaScript",
+        "Java",
+        "Python",
+        "Ruby",
+        "PHP",
+        "C++",
+        "CSS",
+        "C#",
+        "C",
+        "Go"
+    ]
     for language in languages:
         predicted_salary_list = []
         url = "https://api.superjob.ru/2.0/vacancies/"
@@ -72,31 +85,37 @@ def get_statistic_sj(sj_token):
         if predicted_salary_list:
             average_salary_sj = int(sum(predicted_salary_list) / len(predicted_salary_list))
         vacancies_list[language] = {
-    "vacancies_found": response.json()["total"],
-    "vacancies_processed": len(predicted_salary_list),
-    "average_salary": average_salary_sj
-     }
+            "vacancies_found": response.json()["total"],
+            "vacancies_processed": len(predicted_salary_list),
+            "average_salary": average_salary_sj
+         }
     return vacancies_list
 
 
-def write_table_vacancy(statistic):
+def get_table_vacancy(statistic):
     table_data = [
-        ['Язык программирования', 
-    'Вакансий найдено', 
-    'Вакансий обработано', 
-    'Средняя зарплата']
+        [
+            'Язык программирования', 
+            'Вакансий найдено', 
+            'Вакансий обработано', 
+            'Средняя зарплата'
+        ]
      ]
     for language, vacancy in statistic.items():
-        table_data.append([language,
-        vacancy['vacancies_found'], 
-        vacancy['vacancies_processed'],
-        vacancy['average_salary']])    
+        table_data.append(
+            [
+                language,
+                vacancy['vacancies_found'], 
+                vacancy['vacancies_processed'],
+                vacancy['average_salary']
+        ]
+        )    
     table = AsciiTable(table_data)
     return table.table
 
 if __name__ == '__main__':
     load_dotenv()
     sj_token = os.environ['SECRET_KEY_SJ']
-    print(write_table_vacancy(get_statistic_sj(sj_token)))
-    print(write_table_vacancy(get_statistic_hh())) 
+    print(get_table_vacancy(get_statistic_sj(sj_token)))
+    print(get_table_vacancy(get_statistic_hh())) 
 
