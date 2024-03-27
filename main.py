@@ -79,7 +79,7 @@ def get_statistic_sj(sj_token):
     return vacancies_list
 
 
-def write_table_vacancy_information(statistic):
+def write_table_vacancy(statistic):
     table_data = [
         ['Язык программирования', 
     'Вакансий найдено', 
@@ -97,6 +97,6 @@ def write_table_vacancy_information(statistic):
 if __name__ == '__main__':
     load_dotenv()
     sj_token = os.environ['SECRET_KEY_SJ']
-    print(write_table_vacancy_information(get_statistic_sj(sj_token)))
-    print(write_table_vacancy_information(get_statistic_hh())) 
+    print(write_table_vacancy(get_statistic_sj(sj_token)))
+    print(write_table_vacancy(get_statistic_hh())) 
 
