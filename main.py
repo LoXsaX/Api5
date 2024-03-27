@@ -16,7 +16,7 @@ def predict_rub_salary(salary_from = None, salary_to = None):
     return average_salary
 
 
-def statistic_hh():
+def get_statistic_hh():
     vacancies_list = {}
     languages = ["JavaScript",
     "Java", 
@@ -54,7 +54,7 @@ def statistic_hh():
     return vacancies_list
 
 
-def statistic_sj(sj_token):
+def get_statistic_sj(sj_token):
     vacancies_list = {}
     languages = ["JavaScript", "Java", "Python", "Ruby", "PHP", "C++", "CSS", "C#", "C", "Go"]
     for language in languages:
@@ -79,7 +79,7 @@ def statistic_sj(sj_token):
     return vacancies_list
 
 
-def table_vacancy_information(statistic):
+def write_table_vacancy_information(statistic):
     table_data = [
         ['Язык программирования', 
     'Вакансий найдено', 
@@ -97,6 +97,6 @@ def table_vacancy_information(statistic):
 if __name__ == '__main__':
     load_dotenv()
     sj_token = os.environ['SECRET_KEY_SJ']
-    print(table_vacancy_information(statistic_sj(sj_token)))
-    print(table_vacancy_information(statistic_hh())) 
+    print(write_table_vacancy_information(get_statistic_sj(sj_token)))
+    print(write_table_vacancy_information(get_statistic_hh())) 
 
