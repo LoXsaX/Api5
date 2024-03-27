@@ -17,7 +17,7 @@ def predict_rub_salary(salary_from = None, salary_to = None):
 
 
 def get_statistic_hh():
-    vacancies_list = {}
+    vacancies = {}
     languages = [
         "JavaScript",
         "Java", 
@@ -31,7 +31,7 @@ def get_statistic_hh():
         "Go"
     ]
     for language in languages:
-        predicted_salary_list = []
+        predicted_salary = []
         url = 'https://api.hh.ru/vacancies'
         payload = {
             "text": f"программист {language} ",
@@ -57,7 +57,7 @@ def get_statistic_hh():
 
 
 def get_statistic_sj(sj_token):
-    vacancies_list = {}
+    vacancies = {}
     languages = [
         "JavaScript",
         "Java",
@@ -71,7 +71,7 @@ def get_statistic_sj(sj_token):
         "Go"
     ]
     for language in languages:
-        predicted_salary_list = []
+        predicted_salary = []
         url = "https://api.superjob.ru/2.0/vacancies/"
         headers = {"X-Api-App-Id": sj_token}
         payload = {"keyword": f"программист {language}", "town": "Moscow"}
