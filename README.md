@@ -23,7 +23,7 @@ python main.py
 
 Пример срдержания файла `.env`:
 ```
-SJ_TOKEN="SJ_KEY"
+SUPERJOB_TOKEN="SJ_KEY"
 ```
 Получить токен `SJ_TOKEN` можно на сайте [API SuperJob](https://api.superjob.ru/)
 ## Цель проекта
