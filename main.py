@@ -43,8 +43,8 @@ def get_statistic_hh():
         if page >= response.json()["pages"]-1:
                 break
         for salary in response.json()["items"]:
-            currency = salary.get("salary")
-            if currency and currency["currency"] == "RUR":
+            salary_hh = salary.get("salary")
+            if salary_hh and salary_hh["currency"] == "RUR":
                 predicted_salary = predict_rub_salary(salary["salary"].get("from"), salary["salary"].get("to"))
                 if predicted_salary:
                     predicted_salary_list.append(predicted_salary)
