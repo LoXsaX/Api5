@@ -36,7 +36,7 @@ def get_statistic_hh():
         url = 'https://api.hh.ru/vacancies'
         payload = {
             "text": f"программист {language} ",
-            "area": 1,
+            "city_name": 1,
          }
         response = requests.get(url, params = payload)
         response.raise_for_status()
