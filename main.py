@@ -2,7 +2,7 @@ import os
 import requests
 from terminaltables import AsciiTable
 from dotenv import load_dotenv
-
+from itertools import count
 
 def predict_rub_salary(salary_from = None, salary_to = None):
     if salary_from and salary_to:
@@ -32,6 +32,7 @@ def get_statistic_hh():
     ]
     for language in languages:
         predicted_salary = []
+        for page in count(0, 1):
         url = 'https://api.hh.ru/vacancies'
         payload = {
             "text": f"программист {language} ",
@@ -39,6 +40,8 @@ def get_statistic_hh():
          }
         response = requests.get(url, params = payload)
         response.raise_for_status()
+        if page >= response.json()["pages"]-1:
+                break
         for salary in response.json()["items"]:
             currency = salary.get("salary")
             if currency and currency["currency"] == "RUR":
@@ -72,15 +75,18 @@ def get_statistic_sj(sj_token):
     ]
     for language in languages:
         predicted_salary = []
-        url = "https://api.superjob.ru/2.0/vacancies/"
-        headers = {"X-Api-App-Id": sj_token}
-        payload = {"keyword": f"программист {language}", "town": "Moscow"}
-        response = requests.get(url, headers=headers, params=payload)
-        response.raise_for_status()
-        for salary in response.json()["objects"]:
-            predicted_salary = predict_rub_salary(salary["payment_from"], salary["payment_to"])
-            if predicted_salary:
-                predicted_salary_list.append(predicted_salary)
+        for page in count(0, 1):
+            url = "https://api.superjob.ru/2.0/vacancies/"
+            headers = {"X-Api-App-Id": sj_token}
+            payload = {"keyword": f"программист {language}", "town": "Moscow"}
+            response = requests.get(url, headers=headers, params=payload)
+            response.raise_for_status()
+            if not response.json()["objects"]:
+                break
+            for salary in response.json()["objects"]:
+                predicted_salary = predict_rub_salary(salary["payment_from"], salary["payment_to"])
+                if predicted_salary:
+                    predicted_salary_list.append(predicted_salary)
         average_salary_sj = None
         if predicted_salary_list:
             average_salary_sj = int(sum(predicted_salary_list) / len(predicted_salary_list))
