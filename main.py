@@ -47,13 +47,13 @@ def get_statistic_hh():
             if salary_hh and salary_hh["currency"] == "RUR":
                 predicted_salary = predict_rub_salary(salary["salary"].get("from"), salary["salary"].get("to"))
                 if predicted_salary:
-                    predicted_salary.append(predicted_salary)
+                    predicted_salaries.append(predicted_salary)
         average_salary_hh = None
         if predicted_salary:
-            average_salary_hh = int(sum(predicted_salary) / len(predicted_salary))
+            average_salary_hh = int(sum(predicted_salaries) / len(predicted_salaries))
         vacancies[language] = {
             "vacancies_found": response.json()["found"],
-            "vacancies_processed": len(predicted_salary),
+            "vacancies_processed": len(predicted_salaries),
             "average_salary": average_salary_hh
          }
     return vacancies
@@ -86,13 +86,13 @@ def get_statistic_sj(sj_token):
             for salary in response.json()["objects"]:
                 predicted_salary = predict_rub_salary(salary["payment_from"], salary["payment_to"])
                 if predicted_salary:
-                    predicted_salary.append(predicted_salary)
+                    predicted_salaries.append(predicted_salary)
         average_salary_sj = None
         if predicted_salary:
-            average_salary_sj = int(sum(predicted_salary) / len(predicted_salary))
+            average_salary_sj = int(sum(predicted_salaries) / len(predicted_salaries))
         vacancies[language] = {
             "vacancies_found": response.json()["total"],
-            "vacancies_processed": len(predicted_salary),
+            "vacancies_processed": len(predicted_salaries),
             "average_salary": average_salary_sj
          }
     return vacancies
