@@ -47,16 +47,16 @@ def get_statistic_hh():
             if salary_hh and salary_hh["currency"] == "RUR":
                 predicted_salary = predict_rub_salary(salary["salary"].get("from"), salary["salary"].get("to"))
                 if predicted_salary:
-                    predicted_salary_list.append(predicted_salary)
+                    predicted_salary.append(predicted_salary)
         average_salary_hh = None
-        if predicted_salary_list:
-            average_salary_hh = int(sum(predicted_salary_list) / len(predicted_salary_list))
-        vacancies_list[language] = {
+        if predicted_salary:
+            average_salary_hh = int(sum(predicted_salary) / len(predicted_salary))
+        vacancies[language] = {
             "vacancies_found": response.json()["found"],
-            "vacancies_processed": len(predicted_salary_list),
+            "vacancies_processed": len(predicted_salary),
             "average_salary": average_salary_hh
          }
-    return vacancies_list
+    return vacancies
 
 
 def get_statistic_sj(sj_token):
@@ -86,16 +86,16 @@ def get_statistic_sj(sj_token):
             for salary in response.json()["objects"]:
                 predicted_salary = predict_rub_salary(salary["payment_from"], salary["payment_to"])
                 if predicted_salary:
-                    predicted_salary_list.append(predicted_salary)
+                    predicted_salary.append(predicted_salary)
         average_salary_sj = None
-        if predicted_salary_list:
-            average_salary_sj = int(sum(predicted_salary_list) / len(predicted_salary_list))
-        vacancies_list[language] = {
+        if predicted_salary:
+            average_salary_sj = int(sum(predicted_salary) / len(predicted_salary))
+        vacancies[language] = {
             "vacancies_found": response.json()["total"],
-            "vacancies_processed": len(predicted_salary_list),
+            "vacancies_processed": len(predicted_salary),
             "average_salary": average_salary_sj
          }
-    return vacancies_list
+    return vacancies
 
 
 def get_table_vacancy(statistic):
