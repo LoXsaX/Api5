@@ -17,7 +17,7 @@ def predict_rub_salary(salary_from = None, salary_to = None):
 
 
 def get_statistic_hh():
-    vacancies = {}
+    vacancies_all = {}
     languages = [
         "JavaScript",
         "Java", 
@@ -40,9 +40,10 @@ def get_statistic_hh():
          }
         response = requests.get(url, params = payload)
         response.raise_for_status()
-        if page >= response.json()["pages"]-1:
+        vacancies = response.json()
+        if page >= vacancies["pages"]-1:
                 break
-        for salary in response.json()["items"]:
+        for salary in vacancies["items"]:
             salary_hh = salary.get("salary")
             if salary_hh and salary_hh["currency"] == "RUR":
                 predicted_salary = predict_rub_salary(salary["salary"].get("from"), salary["salary"].get("to"))
@@ -51,16 +52,16 @@ def get_statistic_hh():
         average_salary_hh = None
         if predicted_salary:
             average_salary_hh = int(sum(predicted_salaries) / len(predicted_salaries))
-        vacancies[language] = {
-            "vacancies_found": response.json()["found"],
+        vacancies_all[language] = {
+            "vacancies_found": vacancies["found"],
             "vacancies_processed": len(predicted_salaries),
             "average_salary": average_salary_hh
          }
-    return vacancies
+    return vacancies_all
 
 
 def get_statistic_sj(sj_token):
-    vacancies = {}
+    vacancies_all = {}
     languages = [
         "JavaScript",
         "Java",
@@ -81,21 +82,22 @@ def get_statistic_sj(sj_token):
             payload = {"keyword": f"программист {language}", "town": "Moscow"}
             response = requests.get(url, headers=headers, params=payload)
             response.raise_for_status()
-            if not response.json()["objects"]:
+            vacancies = response.json()
+            if not vacancies["objects"]:
                 break
-            for salary in response.json()["objects"]:
+            for salary in vacancies["objects"]:
                 predicted_salary = predict_rub_salary(salary["payment_from"], salary["payment_to"])
                 if predicted_salary:
                     predicted_salaries.append(predicted_salary)
         average_salary_sj = None
         if predicted_salary:
             average_salary_sj = int(sum(predicted_salaries) / len(predicted_salaries))
-        vacancies[language] = {
-            "vacancies_found": response.json()["total"],
+        vacancies_all[language] = {
+            "vacancies_found": vacancies["total"],
             "vacancies_processed": len(predicted_salaries),
             "average_salary": average_salary_sj
          }
-    return vacancies
+    return vacancies_all
 
 
 def get_table_vacancy(statistic):
