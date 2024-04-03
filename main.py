@@ -121,7 +121,7 @@ def get_table_vacancy(statistic):
 
 if __name__ == '__main__':
     load_dotenv()
-    sj_token = os.environ['SECRET_KEY_SJ']
+    SuperJob_token = os.environ['SECRET_KEY_SJ']
     print(get_table_vacancy(get_statistic_sj(sj_token)))
     print(get_table_vacancy(get_statistic_hh())) 
 
