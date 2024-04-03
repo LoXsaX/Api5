@@ -31,7 +31,7 @@ def get_statistic_hh():
         "Go"
     ]
     for language in languages:
-        predicted_salary = []
+        predicted_salaries = []
         for page in count(0, 1):
         url = 'https://api.hh.ru/vacancies'
         payload = {
@@ -74,7 +74,7 @@ def get_statistic_sj(sj_token):
         "Go"
     ]
     for language in languages:
-        predicted_salary = []
+        predicted_salaries = []
         for page in count(0, 1):
             url = "https://api.superjob.ru/2.0/vacancies/"
             headers = {"X-Api-App-Id": sj_token}
