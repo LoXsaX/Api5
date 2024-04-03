@@ -114,7 +114,7 @@ def get_table_vacancy(statistic):
                 vacancy['vacancies_found'], 
                 vacancy['vacancies_processed'],
                 vacancy['average_salary']
-        ]
+            ]
         )    
     table = AsciiTable(table_data)
     return table.table
