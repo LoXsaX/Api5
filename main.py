@@ -17,7 +17,7 @@ def predict_rub_salary(salary_from = None, salary_to = None):
 
 
 def get_statistic_hh():
-    vacancies_all = {}
+    vacancies = {}
     languages = [
         "JavaScript",
         "Java", 
@@ -52,16 +52,16 @@ def get_statistic_hh():
         average_salary_hh = None
         if predicted_salary:
             average_salary_hh = int(sum(predicted_salaries) / len(predicted_salaries))
-        vacancies_all[language] = {
+        vacancies[language] = {
             "vacancies_found": vacancies["found"],
             "vacancies_processed": len(predicted_salaries),
             "average_salary": average_salary_hh
          }
-    return vacancies_all
+    return vacancies
 
 
 def get_statistic_sj(sj_token):
-    vacancies_all = {}
+    vacancies = {}
     languages = [
         "JavaScript",
         "Java",
@@ -92,12 +92,12 @@ def get_statistic_sj(sj_token):
         average_salary_sj = None
         if predicted_salary:
             average_salary_sj = int(sum(predicted_salaries) / len(predicted_salaries))
-        vacancies_all[language] = {
+        vacancies[language] = {
             "vacancies_found": vacancies["total"],
             "vacancies_processed": len(predicted_salaries),
             "average_salary": average_salary_sj
          }
-    return vacancies_all
+    return vacancies
 
 
 def get_table_vacancy(statistic):
