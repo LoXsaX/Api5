@@ -33,22 +33,22 @@ def get_statistic_hh():
     for language in languages:
         predicted_salaries = []
         for page in count(0, 1):
-        url = 'https://api.hh.ru/vacancies'
-        payload = {
-            "text": f"программист {language} ",
-            "city_code": 1,
-         }
-        response = requests.get(url, params = payload)
-        response.raise_for_status()
-        vacancies = response.json()
-        if page >= vacancies["pages"]-1:
-                break
-        for salary in vacancies["items"]:
-            salary_hh = salary.get("salary")
-            if salary_hh and salary_hh["currency"] == "RUR":
-                predicted_salary = predict_rub_salary(salary["salary"].get("from"), salary["salary"].get("to"))
-                if predicted_salary:
-                    predicted_salaries.append(predicted_salary)
+            url = 'https://api.hh.ru/vacancies'
+            payload = {
+                "text": f"программист {language} ",
+                "city_code": 1,
+             }
+            response = requests.get(url, params = payload)
+            response.raise_for_status()
+            vacancies = response.json()
+            if page >= vacancies["pages"]-1:
+                    break
+            for salary in vacancies["items"]:
+                salary_hh = salary.get("salary")
+                if salary_hh and salary_hh["currency"] == "RUR":
+                    predicted_salary = predict_rub_salary(salary["salary"].get("from"), salary["salary"].get("to"))
+                    if predicted_salary:
+                        predicted_salaries.append(predicted_salary)
         average_salary_hh = None
         if predicted_salary:
             average_salary_hh = int(sum(predicted_salaries) / len(predicted_salaries))
