@@ -34,9 +34,10 @@ def get_statistic_hh():
         predicted_salaries = []
         for page in count(0, 1):
             url = 'https://api.hh.ru/vacancies'
+            city_code = 1
             payload = {
                 "text": f"программист {language} ",
-                "city_code": 1,
+                "city_code": city_code,
                 "page": page
              }
             response = requests.get(url, params = payload)
