@@ -37,6 +37,7 @@ def get_statistic_hh():
             payload = {
                 "text": f"программист {language} ",
                 "city_code": 1,
+                "page": page
              }
             response = requests.get(url, params = payload)
             response.raise_for_status()
@@ -79,7 +80,7 @@ def get_statistic_sj(sj_token):
         for page in count(0, 1):
             url = "https://api.superjob.ru/2.0/vacancies/"
             headers = {"X-Api-App-Id": sj_token}
-            payload = {"keyword": f"программист {language}", "town": "Moscow"}
+            payload = {"keyword": f"программист {language}", "town": "Moscow", "page": page}
             response = requests.get(url, headers=headers, params=payload)
             response.raise_for_status()
             vacancies = response.json()
