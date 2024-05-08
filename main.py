@@ -52,7 +52,10 @@ def get_statistic_hh():
                     if predicted_salary:
                         predicted_salaries.append(predicted_salary)
         if predicted_salary:
-            average_salary_hh = int(sum(predicted_salaries) / len(predicted_salaries))
+            if predicted_salaries:
+                average_salary_hh = int(sum(predicted_salaries) / len(predicted_salaries))
+            else:
+                average_salary_hh = None
         else:
             average_salary_hh = None
         vacancies[language] = {
@@ -93,7 +96,10 @@ def get_statistic_sj(sj_token):
                 if predicted_salary:
                     predicted_salaries.append(predicted_salary)
         if predicted_salary:
-            average_salary_sj = int(sum(predicted_salaries) / len(predicted_salaries))
+            if predicted_salaries:
+                average_salary_hh = int(sum(predicted_salaries) / len(predicted_salaries))
+            else:
+                average_salary_hh = None
         else:
             average_salary_sj = None
         vacancies[language] = {
