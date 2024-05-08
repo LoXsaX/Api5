@@ -23,9 +23,9 @@ python main.py
 
 Пример срдержания файла `.env`:
 ```
-superjob_token="SECRET_KEY_SJ"
+SECRET_KEY_SJ="SECRET_KEY_SJ"
 ```
-Получить токен `SJ_TOKEN` можно на сайте [API SuperJob](https://api.superjob.ru/)
+Получить токен `SECRET_KEY_SJ` можно на сайте [API SuperJob](https://api.superjob.ru/)
 ## Цель проекта
 Код написан в образоваетльных целях на онлайн-курсе для веб-разработчиков [dvmn.org](https://dvmn.org/modules/)
 
